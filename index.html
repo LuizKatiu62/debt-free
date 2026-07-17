@@ -156,6 +156,38 @@
   }
   .progress-label { font-size: 12px; color: var(--text-muted); margin-top: 6px; }
 
+  .countdown-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+  .countdown-icon-badge {
+    width: 34px; height: 34px; border-radius: 10px; flex-shrink: 0;
+    background: rgba(42,120,214,.14);
+    display: flex; align-items: center; justify-content: center; font-size: 17px;
+  }
+  .card h2.countdown-title { font-size: 17px; font-weight: 700; color: var(--text-primary); margin: 0; text-transform: none; letter-spacing: normal; }
+  .countdown-divider { border: none; border-top: 1px solid var(--gridline); margin: 0 0 14px; }
+  .countdown-stats { display: flex; gap: 10px; }
+  .countdown-stat { flex: 1; border-radius: 12px; padding: 12px; min-width: 0; }
+  .countdown-stat.green { background: rgba(12,163,12,.09); }
+  .countdown-stat.red { background: rgba(208,59,59,.08); }
+  .countdown-stat .stat-label {
+    font-size: 12px; color: var(--text-secondary); font-weight: 600;
+    display: flex; align-items: center; gap: 4px; margin-bottom: 6px;
+  }
+  .countdown-stat .stat-big { font-size: 19px; font-weight: 800; margin-bottom: 8px; line-height: 1.2; }
+  .countdown-stat.green .stat-big { color: var(--good); }
+  .countdown-stat.red .stat-big { color: var(--critical); }
+  .countdown-stat .stat-sub {
+    font-size: 12px; color: var(--text-secondary); font-weight: 600;
+    display: flex; align-items: center; gap: 4px;
+  }
+  .countdown-stat .stat-sub-muted { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+  .countdown-stat .stat-sub-value { font-size: 14px; font-weight: 700; color: var(--accent); margin-top: 2px; }
+  .countdown-progress-row {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 16px; font-size: 13px; font-weight: 700;
+  }
+  .countdown-progress-row .pct { color: var(--good); }
+  .countdown-progress-fill { background: var(--good) !important; }
+
   .upcoming-card, .debt-card, .payment-row {
     border: 1px solid var(--border);
     border-radius: 12px; padding: 12px; margin-bottom: 10px;
@@ -316,17 +348,30 @@
   <!-- HOME / PRINCIPAL -->
   <section class="tab-panel active" id="tab-home">
     <div class="card">
-      <h2>Countdown</h2>
-      <p class="hero-number" id="home-years">—</p>
-      <p class="hero-sub" id="home-freedate"></p>
-      <div class="stat-row">
-        <div class="stat-box">
-          <div class="label">Remaining debt</div>
-          <div class="value" id="home-remaining">$0.00</div>
+      <div class="countdown-header">
+        <div class="countdown-icon-badge">🎂</div>
+        <h2 class="countdown-title">Debt-Free Countdown</h2>
+      </div>
+      <hr class="countdown-divider">
+      <div class="countdown-stats">
+        <div class="countdown-stat green">
+          <div class="stat-label">⏳ Debt Free In</div>
+          <div class="stat-big" id="home-years">—</div>
+          <div class="stat-sub" id="home-freedate">📅 —</div>
+          <div class="stat-sub-muted" id="home-days-remaining"></div>
+        </div>
+        <div class="countdown-stat red">
+          <div class="stat-label">🚩 Debt Remaining</div>
+          <div class="stat-big" id="home-remaining">$0.00</div>
+          <div class="stat-sub">💵 Paid off</div>
+          <div class="stat-sub-value" id="home-paid-off">$0.00</div>
         </div>
       </div>
-      <div class="progress-track"><div class="progress-fill" id="home-progress-bar"></div></div>
-      <div class="progress-label" id="home-progress-label">0% complete</div>
+      <div class="countdown-progress-row">
+        <span>Overall Progress</span>
+        <span class="pct" id="home-progress-label">0% Complete</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill countdown-progress-fill" id="home-progress-bar"></div></div>
     </div>
 
     <div class="card">
@@ -616,6 +661,10 @@ function fmtDateShort(iso){
   if (!iso) return '—';
   return new Date(iso + 'T00:00:00').toLocaleDateString('en-US', {day:'2-digit', month:'2-digit', year:'numeric'});
 }
+function fmtDateMedium(iso){
+  if (!iso) return '—';
+  return new Date(iso + 'T00:00:00').toLocaleDateString('en-US', {weekday:'short', month:'short', day:'numeric', year:'numeric'});
+}
 function addDaysISO(iso, days){
   const d = new Date(iso + 'T00:00:00');
   d.setDate(d.getDate() + days);
@@ -742,6 +791,14 @@ function formatYears(years){
   if (months > 0 || y === 0) parts.push(months + (months === 1 ? ' month' : ' months'));
   return parts.join(' and ');
 }
+function formatCountdownShort(years){
+  if (!isFinite(years) || years <= 0) return "You're debt-free!";
+  return 'in ' + formatYears(years);
+}
+function daysRemaining(years){
+  if (!isFinite(years) || years <= 0) return 0;
+  return Math.round(years * 365.25);
+}
 function projectedFreeDateISO(years){
   if (!isFinite(years) || years <= 0) return todayISO();
   const d = new Date();
@@ -783,13 +840,20 @@ function renderHome(){
   const totalStart = state.debts.reduce((s,d) => s + d.startBalance, 0);
   const pct = totalStart > 0 ? Math.min(100, ((totalStart - totalRemaining) / totalStart) * 100) : 0;
 
-  $('#home-years').textContent = state.debts.length ? formatYears(sim.years) : 'No debts added yet';
-  $('#home-freedate').textContent = state.debts.length
-    ? 'Projected date: ' + fmtDateLong(projectedFreeDateISO(sim.years))
-    : 'Add a debt to start your countdown.';
+  $('#home-years').textContent = state.debts.length ? formatCountdownShort(sim.years) : 'No debts added yet';
+  if (state.debts.length) {
+    const freeDate = projectedFreeDateISO(sim.years);
+    $('#home-freedate').textContent = '📅 ' + fmtDateMedium(freeDate);
+    const days = daysRemaining(sim.years);
+    $('#home-days-remaining').textContent = days > 0 ? days + ' days remaining' : '';
+  } else {
+    $('#home-freedate').textContent = 'Add a debt to start your countdown.';
+    $('#home-days-remaining').textContent = '';
+  }
   $('#home-remaining').textContent = fmtMoney(totalRemaining);
+  $('#home-paid-off').textContent = fmtMoney(Math.max(0, totalStart - totalRemaining));
   $('#home-progress-bar').style.width = pct + '%';
-  $('#home-progress-label').textContent = pct.toFixed(1) + '% complete';
+  $('#home-progress-label').textContent = pct.toFixed(1) + '% Complete';
 
   const active = state.debts.filter(d => d.balance > 0.01);
   const target = [...active].sort((a,b) => a.balance - b.balance)[0];
