@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<title>Debt Free — Contagem Regressiva</title>
+<title>Debt Free — Countdown</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
 <style>
   :root {
@@ -288,16 +288,16 @@
   <div class="modal" style="max-width:360px;">
     <div class="modal-header"><h3>💸 Debt Free — Login</h3></div>
     <div class="field">
-      <label for="login-email">E-mail</label>
+      <label for="login-email">Email</label>
       <input type="email" id="login-email" autocomplete="username">
     </div>
     <div class="field">
-      <label for="login-senha">Senha</label>
+      <label for="login-senha">Password</label>
       <input type="password" id="login-senha" autocomplete="current-password">
     </div>
     <p id="login-erro" style="color:var(--critical);font-size:13px;min-height:16px;"></p>
     <div class="modal-actions">
-      <button class="btn" id="login-btn" style="flex:1;">Entrar</button>
+      <button class="btn" id="login-btn" style="flex:1;">Log In</button>
     </div>
   </div>
 </div>
@@ -308,29 +308,29 @@
     <div id="incentive-message"></div>
     <div id="sync-indicator">
       <span id="sync-dot"></span>
-      <span id="sync-txt">conectando...</span>
-      <button id="btn-logout">Sair</button>
+      <span id="sync-txt">connecting...</span>
+      <button id="btn-logout">Log Out</button>
     </div>
   </header>
 
   <!-- HOME / PRINCIPAL -->
   <section class="tab-panel active" id="tab-home">
     <div class="card">
-      <h2>Contagem regressiva</h2>
+      <h2>Countdown</h2>
       <p class="hero-number" id="home-years">—</p>
       <p class="hero-sub" id="home-freedate"></p>
       <div class="stat-row">
         <div class="stat-box">
-          <div class="label">Dívida restante</div>
+          <div class="label">Remaining debt</div>
           <div class="value" id="home-remaining">$0.00</div>
         </div>
       </div>
       <div class="progress-track"><div class="progress-fill" id="home-progress-bar"></div></div>
-      <div class="progress-label" id="home-progress-label">0% concluído</div>
+      <div class="progress-label" id="home-progress-label">0% complete</div>
     </div>
 
     <div class="card">
-      <h2>Próximos pagamentos</h2>
+      <h2>Upcoming payments</h2>
       <div id="home-upcoming-list"></div>
     </div>
   </section>
@@ -338,7 +338,7 @@
   <!-- DEBTS -->
   <section class="tab-panel" id="tab-debts">
     <div class="section-header">
-      <h2>Meus débitos</h2>
+      <h2>My debts</h2>
       <button class="btn-fab" id="btn-add-debt">+</button>
     </div>
     <div id="debts-list"></div>
@@ -347,13 +347,13 @@
   <!-- PAYMENTS -->
   <section class="tab-panel" id="tab-payments">
     <div class="card extra-payment-trigger" id="btn-extra-payment">
-      <span>Fazer um pagamento extra</span>
+      <span>Make an extra payment</span>
       <button class="btn-fab">+</button>
     </div>
 
     <div class="subtabs">
-      <button class="active" data-subtab="upcoming">Próximos</button>
-      <button data-subtab="past">Histórico</button>
+      <button class="active" data-subtab="upcoming">Upcoming</button>
+      <button data-subtab="past">History</button>
     </div>
 
     <div class="subpanel active" id="subtab-upcoming">
@@ -367,58 +367,58 @@
   <!-- DASHBOARDS -->
   <section class="tab-panel" id="tab-dashboards">
     <div class="card">
-      <h2>Dívida por categoria</h2>
+      <h2>Debt by category</h2>
       <div class="chart-wrap"><canvas id="chart-category"></canvas></div>
       <div class="chart-legend" id="chart-category-legend"></div>
     </div>
 
     <div class="card">
-      <h2>Simulador de pagamento extra</h2>
+      <h2>Extra payment simulator</h2>
       <div class="field">
-        <label for="sim-amount">Valor extra</label>
+        <label for="sim-amount">Extra amount</label>
         <input type="number" id="sim-amount" min="0" step="0.01" placeholder="0.00">
       </div>
       <div class="field">
-        <label for="sim-frequency">Frequência</label>
+        <label for="sim-frequency">Frequency</label>
         <select id="sim-frequency">
-          <option value="monthly">Mensal</option>
-          <option value="biweekly">Quinzenal (bi-weekly)</option>
+          <option value="monthly">Monthly</option>
+          <option value="biweekly">Biweekly</option>
         </select>
       </div>
       <div class="field biweekly-field" id="sim-firstdate-field">
-        <label for="sim-firstdate">Data do primeiro pagamento extra</label>
+        <label for="sim-firstdate">First extra payment date</label>
         <input type="date" id="sim-firstdate">
       </div>
       <div class="stat-row">
         <div class="stat-box">
-          <div class="label">Tempo estimado para ficar livre de dívidas</div>
+          <div class="label">Estimated time to become debt-free</div>
           <div class="value" id="sim-years">—</div>
         </div>
       </div>
     </div>
 
     <div class="card">
-      <h2>Progresso total</h2>
+      <h2>Total progress</h2>
       <p class="hero-number" id="dash-paid">$0.00</p>
-      <p class="hero-sub">pago até agora</p>
+      <p class="hero-sub">paid so far</p>
       <div class="progress-track"><div class="progress-fill" id="dash-progress-bar"></div></div>
-      <div class="progress-label" id="dash-progress-label">0% concluído</div>
+      <div class="progress-label" id="dash-progress-label">0% complete</div>
     </div>
 
     <div class="card">
-      <h2>Evolução da dívida</h2>
+      <h2>Debt evolution</h2>
       <div class="chart-wrap"><canvas id="chart-evolution"></canvas></div>
     </div>
 
     <div class="card">
-      <h2>Jornada até a quitação</h2>
+      <h2>Payoff journey</h2>
       <div id="payoff-journey-list"></div>
     </div>
   </section>
 </div>
 
 <nav class="tabs" id="nav-tabs" style="display:none;">
-  <button class="active" data-tab="home"><span class="icon">🏠</span>Principal</button>
+  <button class="active" data-tab="home"><span class="icon">🏠</span>Home</button>
   <button data-tab="debts"><span class="icon">👛</span>Debts</button>
   <button data-tab="payments"><span class="icon">💰</span>Payments</button>
   <button data-tab="dashboards"><span class="icon">📊</span>Dashboards</button>
@@ -428,50 +428,50 @@
 <div class="overlay" id="modal-debt-form">
   <div class="modal">
     <div class="modal-header">
-      <h3 id="debt-form-title">Novo débito</h3>
+      <h3 id="debt-form-title">New debt</h3>
       <button class="modal-close" data-close="modal-debt-form">×</button>
     </div>
     <div class="field">
-      <label for="debt-category">Categoria</label>
+      <label for="debt-category">Category</label>
       <select id="debt-category"></select>
     </div>
     <div class="field">
-      <label>Ícone</label>
+      <label>Icon</label>
       <div class="icon-grid" id="debt-icon-grid"></div>
     </div>
     <div class="field">
-      <label for="debt-name">Nome</label>
-      <input type="text" id="debt-name" placeholder="Ex: Cartão Visa">
+      <label for="debt-name">Name</label>
+      <input type="text" id="debt-name" placeholder="e.g. Visa Card">
     </div>
     <div class="field">
-      <label for="debt-start-balance">Valor inicial (Start Balance)</label>
+      <label for="debt-start-balance">Starting balance</label>
       <input type="number" id="debt-start-balance" min="0" step="0.01" placeholder="0.00">
     </div>
     <div class="field">
-      <label for="debt-rate">Taxa de juros anual (Interest Rate)</label>
+      <label for="debt-rate">Annual interest rate</label>
       <div class="pct-wrap">
         <input type="number" id="debt-rate" min="0" step="0.01" placeholder="0.00">
         <span>%</span>
       </div>
     </div>
     <div class="field">
-      <label for="debt-due-date">Próxima data de vencimento</label>
+      <label for="debt-due-date">Next due date</label>
       <input type="date" id="debt-due-date">
     </div>
     <div class="field">
-      <label for="debt-min-payment">Valor mínimo da parcela</label>
+      <label for="debt-min-payment">Minimum payment amount</label>
       <input type="number" id="debt-min-payment" min="0" step="0.01" placeholder="0.00">
     </div>
     <div class="field">
-      <label for="debt-cycle">Ciclo de pagamento</label>
+      <label for="debt-cycle">Payment cycle</label>
       <select id="debt-cycle">
-        <option value="monthly">Mensal</option>
-        <option value="biweekly">Quinzenal (bi-weekly)</option>
+        <option value="monthly">Monthly</option>
+        <option value="biweekly">Biweekly</option>
       </select>
     </div>
     <div class="modal-actions">
-      <button class="btn secondary" data-close="modal-debt-form">Cancelar</button>
-      <button class="btn" id="btn-save-debt">Salvar</button>
+      <button class="btn secondary" data-close="modal-debt-form">Cancel</button>
+      <button class="btn" id="btn-save-debt">Save</button>
     </div>
   </div>
 </div>
@@ -480,18 +480,18 @@
 <div class="overlay" id="modal-debt-detail">
   <div class="modal">
     <div class="modal-header">
-      <h3 id="detail-title">Débito</h3>
+      <h3 id="detail-title">Debt</h3>
       <button class="modal-close" data-close="modal-debt-detail">×</button>
     </div>
     <div class="chart-wrap" style="height:180px;"><canvas id="chart-debt-detail"></canvas></div>
     <div class="chart-legend" id="detail-legend"></div>
-    <h3 style="margin-top:18px;">Próximos pagamentos</h3>
+    <h3 style="margin-top:18px;">Upcoming payments</h3>
     <div id="detail-upcoming"></div>
-    <h3 style="margin-top:18px;">Pagamentos realizados</h3>
+    <h3 style="margin-top:18px;">Payments made</h3>
     <div id="detail-history"></div>
     <div class="detail-actions">
-      <button class="btn secondary" id="btn-edit-debt">Editar</button>
-      <button class="btn danger" id="btn-delete-debt">🗑 Excluir</button>
+      <button class="btn secondary" id="btn-edit-debt">Edit</button>
+      <button class="btn danger" id="btn-delete-debt">🗑 Delete</button>
     </div>
   </div>
 </div>
@@ -500,20 +500,20 @@
 <div class="overlay" id="modal-extra-payment">
   <div class="modal">
     <div class="modal-header">
-      <h3>Pagamento extra</h3>
+      <h3>Extra payment</h3>
       <button class="modal-close" data-close="modal-extra-payment">×</button>
     </div>
     <div class="field">
-      <label for="extra-debt-select">Débito</label>
+      <label for="extra-debt-select">Debt</label>
       <select id="extra-debt-select"></select>
     </div>
     <div class="field">
-      <label for="extra-amount-input">Valor</label>
+      <label for="extra-amount-input">Amount</label>
       <input type="number" id="extra-amount-input" min="0" step="0.01" placeholder="0.00">
     </div>
     <div class="modal-actions">
-      <button class="btn secondary" data-close="modal-extra-payment">Cancelar</button>
-      <button class="btn" id="btn-save-extra-payment">Salvar</button>
+      <button class="btn secondary" data-close="modal-extra-payment">Cancel</button>
+      <button class="btn" id="btn-save-extra-payment">Save</button>
     </div>
   </div>
 </div>
@@ -522,14 +522,14 @@
 <div class="overlay" id="modal-confirm-payment">
   <div class="modal">
     <div class="modal-header">
-      <h3>Confirmar pagamento</h3>
+      <h3>Confirm payment</h3>
       <button class="modal-close" data-close="modal-confirm-payment">×</button>
     </div>
     <p id="confirm-payment-desc" style="font-size:14px;color:var(--text-secondary);"></p>
     <p class="hero-number" id="confirm-payment-amount">$0.00</p>
     <div class="modal-actions">
-      <button class="btn secondary" data-close="modal-confirm-payment">Cancelar</button>
-      <button class="btn" id="btn-confirm-payment">Confirmar pagamento</button>
+      <button class="btn secondary" data-close="modal-confirm-payment">Cancel</button>
+      <button class="btn" id="btn-confirm-payment">Confirm payment</button>
     </div>
   </div>
 </div>
@@ -546,29 +546,29 @@
 const STORAGE_KEY = 'debtFreeApp_v1';
 
 const CATEGORIES = [
-  {key:'personal',  label:'Empréstimo Pessoal',    light:'#2a78d6', dark:'#3987e5', icon:'💰'},
-  {key:'car',       label:'Financiamento de Carro', light:'#008300', dark:'#008300', icon:'🚗'},
-  {key:'credit',    label:'Cartão de Crédito',      light:'#e87ba4', dark:'#d55181', icon:'💳'},
-  {key:'student',   label:'Empréstimo Estudantil',  light:'#eda100', dark:'#c98500', icon:'🎓'},
-  {key:'mortgage',  label:'Hipoteca',               light:'#1baf7a', dark:'#199e70', icon:'🏠'},
-  {key:'medical',   label:'Empréstimo Médico',      light:'#eb6834', dark:'#d95926', icon:'🏥'},
-  {key:'other',     label:'Outro Empréstimo',       light:'#4a3aa7', dark:'#9085e9', icon:'🛍️'},
+  {key:'personal',  label:'Personal Loan', light:'#2a78d6', dark:'#3987e5', icon:'💰'},
+  {key:'car',       label:'Car Loan',      light:'#008300', dark:'#008300', icon:'🚗'},
+  {key:'credit',    label:'Credit Card',   light:'#e87ba4', dark:'#d55181', icon:'💳'},
+  {key:'student',   label:'Student Loan',  light:'#eda100', dark:'#c98500', icon:'🎓'},
+  {key:'mortgage',  label:'Mortgage',      light:'#1baf7a', dark:'#199e70', icon:'🏠'},
+  {key:'medical',   label:'Medical Loan',  light:'#eb6834', dark:'#d95926', icon:'🏥'},
+  {key:'other',     label:'Other Loan',    light:'#4a3aa7', dark:'#9085e9', icon:'🛍️'},
 ];
 
 const ICON_OPTIONS = ['👕','🚲','🚗','🏠','💳','💰','🎓','🏥','🛍️','💼','📱','💻','✈️','🛋️','🐾','⚕️','🎸','📚','🛠️','💍'];
 
 const MESSAGES = [
-  'Cada pagamento é um passo a mais rumo à sua liberdade financeira.',
-  'Você está mais perto de ficar debt-free do que ontem. Continue!',
-  'Pequenas vitórias constroem grandes conquistas. Foco na bola de neve!',
-  'A disciplina de hoje é a liberdade de amanhã.',
-  'Um débito a menos é uma preocupação a menos. Siga em frente!',
-  'Sua jornada rumo à liberdade financeira está em andamento — não pare agora.',
-  'Cada dólar extra pago é um dia a menos até a sua liberdade.',
-  'Você é mais forte que suas dívidas. Continue avançando!',
+  'Every payment is one more step toward your financial freedom.',
+  'You are closer to being debt-free than you were yesterday. Keep going!',
+  'Small wins build big victories. Stay focused on the snowball!',
+  "Today's discipline is tomorrow's freedom.",
+  'One less debt is one less worry. Keep moving forward!',
+  'Your journey toward financial freedom is underway — don’t stop now.',
+  'Every extra dollar paid is one less day until your freedom.',
+  'You are stronger than your debts. Keep pushing forward!',
 ];
 
-const BADGE_LABEL = { minimum:'Mínimo', extra:'Extra', payoff:'Quitação' };
+const BADGE_LABEL = { minimum:'Minimum', extra:'Extra', payoff:'Payoff' };
 
 /* ---------------- State ---------------- */
 let state = loadState();
@@ -610,11 +610,11 @@ function fmtMoney(n){
 function todayISO(){ return new Date().toISOString().slice(0,10); }
 function fmtDateLong(iso){
   if (!iso) return '—';
-  return new Date(iso + 'T00:00:00').toLocaleDateString('pt-BR', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
+  return new Date(iso + 'T00:00:00').toLocaleDateString('en-US', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
 }
 function fmtDateShort(iso){
   if (!iso) return '—';
-  return new Date(iso + 'T00:00:00').toLocaleDateString('pt-BR', {day:'2-digit', month:'2-digit', year:'numeric'});
+  return new Date(iso + 'T00:00:00').toLocaleDateString('en-US', {day:'2-digit', month:'2-digit', year:'numeric'});
 }
 function addDaysISO(iso, days){
   const d = new Date(iso + 'T00:00:00');
@@ -732,15 +732,15 @@ function simulateSnowball(debts, extraMonthly){
 }
 
 function formatYears(years){
-  if (!isFinite(years) || years <= 0) return 'Parabéns, você já está livre!';
+  if (!isFinite(years) || years <= 0) return 'Congrats, you are already debt-free!';
   const wholeYears = Math.floor(years);
   let months = Math.round((years - wholeYears) * 12);
   let y = wholeYears;
   if (months === 12) { y++; months = 0; }
   const parts = [];
-  if (y > 0) parts.push(y + (y === 1 ? ' ano' : ' anos'));
-  if (months > 0 || y === 0) parts.push(months + (months === 1 ? ' mês' : ' meses'));
-  return parts.join(' e ');
+  if (y > 0) parts.push(y + (y === 1 ? ' year' : ' years'));
+  if (months > 0 || y === 0) parts.push(months + (months === 1 ? ' month' : ' months'));
+  return parts.join(' and ');
 }
 function projectedFreeDateISO(years){
   if (!isFinite(years) || years <= 0) return todayISO();
@@ -783,13 +783,13 @@ function renderHome(){
   const totalStart = state.debts.reduce((s,d) => s + d.startBalance, 0);
   const pct = totalStart > 0 ? Math.min(100, ((totalStart - totalRemaining) / totalStart) * 100) : 0;
 
-  $('#home-years').textContent = state.debts.length ? formatYears(sim.years) : 'Nenhum débito cadastrado';
+  $('#home-years').textContent = state.debts.length ? formatYears(sim.years) : 'No debts added yet';
   $('#home-freedate').textContent = state.debts.length
-    ? 'Data prevista: ' + fmtDateLong(projectedFreeDateISO(sim.years))
-    : 'Adicione um débito para começar sua contagem regressiva.';
+    ? 'Projected date: ' + fmtDateLong(projectedFreeDateISO(sim.years))
+    : 'Add a debt to start your countdown.';
   $('#home-remaining').textContent = fmtMoney(totalRemaining);
   $('#home-progress-bar').style.width = pct + '%';
-  $('#home-progress-label').textContent = pct.toFixed(1) + '% concluído';
+  $('#home-progress-label').textContent = pct.toFixed(1) + '% complete';
 
   const active = state.debts.filter(d => d.balance > 0.01);
   const target = [...active].sort((a,b) => a.balance - b.balance)[0];
@@ -815,7 +815,7 @@ function renderHome(){
 
   $('#home-upcoming-list').innerHTML = items.length
     ? items.map(renderUpcomingCardHTML).join('')
-    : '<p class="empty">Nenhum pagamento futuro. Adicione um débito na aba Debts.</p>';
+    : '<p class="empty">No upcoming payments. Add a debt in the Debts tab.</p>';
 }
 
 function renderUpcomingCardHTML(item){
@@ -835,7 +835,7 @@ function renderDebts(){
   const list = $('#debts-list');
   const sorted = [...state.debts].sort((a,b) => a.balance - b.balance);
   if (!sorted.length) {
-    list.innerHTML = '<p class="empty">Nenhum débito cadastrado. Toque em "+" para adicionar.</p>';
+    list.innerHTML = '<p class="empty">No debts yet. Tap "+" to add one.</p>';
     return;
   }
   list.innerHTML = sorted.map(d => {
@@ -848,7 +848,7 @@ function renderDebts(){
           <div class="remaining">${fmtMoney(d.balance)}</div>
         </div>
         <div class="meta-row">
-          <span>Próximo: ${fmtDateShort(d.nextDueDate)}</span>
+          <span>Next: ${fmtDateShort(d.nextDueDate)}</span>
           <span>${fmtMoney(d.minPayment)}</span>
         </div>
         <div class="progress-track"><div class="progress-fill" style="width:${pct}%"></div></div>
@@ -864,7 +864,7 @@ function renderPaymentsUpcoming(){
   const list = $('#upcoming-payments-list');
   const active = state.debts.filter(d => d.balance > 0.01).sort((a,b) => a.nextDueDate.localeCompare(b.nextDueDate));
   if (!active.length) {
-    list.innerHTML = '<p class="empty">Nenhum pagamento futuro.</p>';
+    list.innerHTML = '<p class="empty">No upcoming payments.</p>';
     return;
   }
   list.innerHTML = active.map(d => {
@@ -890,7 +890,7 @@ function renderPaymentsPast(){
   const list = $('#past-payments-list');
   const sorted = [...state.payments].sort((a,b) => b.date.localeCompare(a.date));
   if (!sorted.length) {
-    list.innerHTML = '<p class="empty">Nenhum pagamento registrado ainda.</p>';
+    list.innerHTML = '<p class="empty">No payments recorded yet.</p>';
     return;
   }
   list.innerHTML = sorted.map(p => `
@@ -922,12 +922,12 @@ function renderDashboards(){
   const pct = totalStart > 0 ? Math.min(100, (paid / totalStart) * 100) : 0;
   $('#dash-paid').textContent = fmtMoney(paid);
   $('#dash-progress-bar').style.width = pct + '%';
-  $('#dash-progress-label').textContent = pct.toFixed(1) + '% concluído';
+  $('#dash-progress-label').textContent = pct.toFixed(1) + '% complete';
 
   const journey = $('#payoff-journey-list');
   const activeDebts = state.debts.filter(d => d.balance > 0.01);
   if (!activeDebts.length) {
-    journey.innerHTML = '<p class="empty">Nenhum débito ativo.</p>';
+    journey.innerHTML = '<p class="empty">No active debts.</p>';
   } else {
     const rows = activeDebts.map(d => ({
       icon: d.icon, name: d.name, date: sim.payoffDates[d.id] || null
@@ -956,7 +956,7 @@ function renderCategoryChart(){
 
   if (!keys.length) {
     canvas.style.display = 'none';
-    legend.innerHTML = '<span class="empty">Sem dados para exibir.</span>';
+    legend.innerHTML = '<span class="empty">No data to display.</span>';
     return;
   }
   canvas.style.display = 'block';
@@ -1000,7 +1000,7 @@ function renderEvolutionChart(){
     data: {
       labels: series.map(p => fmtDateShort(p.date)),
       datasets: [{
-        label: 'Dívida total',
+        label: 'Total debt',
         data: series.map(p => p.total),
         borderColor: categoryColor('personal'),
         backgroundColor: 'transparent',
@@ -1092,7 +1092,7 @@ function openDebtModal(debtId){
   editingDebtId = debtId || null;
   const debt = debtId ? state.debts.find(d => d.id === debtId) : null;
 
-  $('#debt-form-title').textContent = debt ? 'Editar débito' : 'Novo débito';
+  $('#debt-form-title').textContent = debt ? 'Edit debt' : 'New debt';
   $('#debt-category').value = debt ? debt.category : CATEGORIES[0].key;
   highlightIcon(debt ? debt.icon : categoryInfo($('#debt-category').value).icon);
   $('#debt-name').value = debt ? debt.name : '';
@@ -1117,7 +1117,7 @@ $('#btn-save-debt').addEventListener('click', () => {
   const cycle = $('#debt-cycle').value;
 
   if (!name || !dueDate || !(startBalance > 0) || !(minPayment > 0) || isNaN(rate) || rate < 0) {
-    alert('Preencha todos os campos corretamente.');
+    alert('Please fill in all fields correctly.');
     return;
   }
 
@@ -1156,7 +1156,7 @@ function openDebtDetail(debtId){
   detailChart = new Chart($('#chart-debt-detail').getContext('2d'), {
     type: 'doughnut',
     data: {
-      labels: ['Pago', 'Restante'],
+      labels: ['Paid', 'Remaining'],
       datasets: [{ data: [paid, remaining], backgroundColor: [cssVar('--good'), color], borderColor: cssVar('--surface-2'), borderWidth: 2 }]
     },
     options: {
@@ -1170,9 +1170,9 @@ function openDebtDetail(debtId){
 
   const pct = debt.startBalance > 0 ? ((paid / debt.startBalance) * 100).toFixed(1) : '0.0';
   $('#detail-legend').innerHTML = `
-    <span class="item"><span class="swatch" style="background:${cssVar('--good')}"></span>Pago: ${fmtMoney(paid)}</span>
-    <span class="item"><span class="swatch" style="background:${color}"></span>Restante: ${fmtMoney(remaining)}</span>
-    <span class="item">${pct}% pago</span>
+    <span class="item"><span class="swatch" style="background:${cssVar('--good')}"></span>Paid: ${fmtMoney(paid)}</span>
+    <span class="item"><span class="swatch" style="background:${color}"></span>Remaining: ${fmtMoney(remaining)}</span>
+    <span class="item">${pct}% paid</span>
   `;
 
   const upcoming = [];
@@ -1192,7 +1192,7 @@ function openDebtDetail(debtId){
           <span>${fmtDateShort(u.date)} · ${u.payoff ? BADGE_LABEL.payoff : BADGE_LABEL.minimum}</span>
           <span>${fmtMoney(u.amount)}</span>
         </div>`).join('')
-    : '<p class="empty">Débito quitado — sem próximos pagamentos.</p>';
+    : '<p class="empty">Debt paid off — no upcoming payments.</p>';
 
   const history = state.payments
     .filter(p => p.debtId === debtId)
@@ -1203,7 +1203,7 @@ function openDebtDetail(debtId){
           <span>${fmtDateShort(p.date)} · ${BADGE_LABEL[p.type]}</span>
           <span>${fmtMoney(p.amount)}</span>
         </div>`).join('')
-    : '<p class="empty">Nenhum pagamento registrado ainda.</p>';
+    : '<p class="empty">No payments recorded yet.</p>';
 
   openModal('modal-debt-detail');
 }
@@ -1214,7 +1214,7 @@ $('#btn-edit-debt').addEventListener('click', () => {
 });
 
 $('#btn-delete-debt').addEventListener('click', () => {
-  if (!confirm('Tem certeza que deseja excluir este débito? Esta ação não pode ser desfeita.')) return;
+  if (!confirm('Are you sure you want to delete this debt? This action cannot be undone.')) return;
   if (!state.deletedDebtIds.includes(currentDetailDebtId)) state.deletedDebtIds.push(currentDetailDebtId);
   state.debts = state.debts.filter(d => d.id !== currentDetailDebtId);
   state.payments = state.payments.filter(p => p.debtId !== currentDetailDebtId);
@@ -1227,7 +1227,7 @@ $('#btn-delete-debt').addEventListener('click', () => {
 $('#btn-extra-payment').addEventListener('click', () => {
   const sel = $('#extra-debt-select');
   const sorted = [...state.debts].filter(d => d.balance > 0.01).sort((a,b) => a.balance - b.balance);
-  if (!sorted.length) { alert('Nenhum débito ativo para pagar.'); return; }
+  if (!sorted.length) { alert('No active debts to pay.'); return; }
   sel.innerHTML = sorted.map(d => `<option value="${d.id}">${d.icon} ${escapeHTML(d.name)} (${fmtMoney(d.balance)})</option>`).join('');
   $('#extra-amount-input').value = '';
   openModal('modal-extra-payment');
@@ -1237,7 +1237,7 @@ $('#btn-save-extra-payment').addEventListener('click', () => {
   const debtId = $('#extra-debt-select').value;
   const amount = parseFloat($('#extra-amount-input').value);
   const debt = state.debts.find(d => d.id === debtId);
-  if (!debt || !(amount > 0)) { alert('Informe um valor válido.'); return; }
+  if (!debt || !(amount > 0)) { alert('Enter a valid amount.'); return; }
 
   const amt = Math.min(amount, debt.balance);
   debt.balance = Math.max(0, debt.balance - amt);
@@ -1258,7 +1258,7 @@ function openConfirmPayment(debtId){
   const debt = state.debts.find(d => d.id === debtId);
   if (!debt) return;
   const amt = Math.min(debt.minPayment, debt.balance);
-  $('#confirm-payment-desc').textContent = `${debt.icon} ${debt.name} — vencimento ${fmtDateLong(debt.nextDueDate)}`;
+  $('#confirm-payment-desc').textContent = `${debt.icon} ${debt.name} — due ${fmtDateLong(debt.nextDueDate)}`;
   $('#confirm-payment-amount').textContent = fmtMoney(amt);
   openModal('modal-confirm-payment');
 }
@@ -1356,8 +1356,8 @@ function pushToFirebase(){
   };
   _fbRef.set(payload).then(() => {
     localStorage.setItem(STORAGE_KEY + '_ts', String(Date.now()));
-    syncStatus('#43a047', 'sincronizado');
-  }).catch(() => syncStatus('#e53935', 'erro ao sincronizar'))
+    syncStatus('#43a047', 'synced');
+  }).catch(() => syncStatus('#e53935', 'sync error'))
     .finally(() => { setTimeout(() => { _fbSalvando = false; }, 800); });
 }
 
@@ -1371,7 +1371,7 @@ function inicializarFirebaseSync(){
   if (_fbIniciado) return;
   _fbIniciado = true;
   _fbRef = firebase.database().ref('debts/' + FB_SECRET);
-  syncStatus('#ffb300', 'conectando...');
+  syncStatus('#ffb300', 'connecting...');
 
   _fbRef.once('value').then(snap => {
     const fbData = snap.val();
@@ -1399,7 +1399,7 @@ function inicializarFirebaseSync(){
       if (!d || !d._ts || d._ts <= getLocalTs() + 1000) return;
       applyRemoteData(d, true);
       renderAll();
-      syncStatus('#43a047', 'atualizado ☁️');
+      syncStatus('#43a047', 'updated ☁️');
     });
   }).catch(() => syncStatus('#e53935', 'offline'));
 }
@@ -1432,11 +1432,11 @@ function attemptLogin(){
   const erro = $('#login-erro');
   const btn = $('#login-btn');
   erro.textContent = '';
-  if (!email || !senha) { erro.textContent = 'Preencha e-mail e senha.'; return; }
-  btn.disabled = true; btn.textContent = 'Entrando…';
+  if (!email || !senha) { erro.textContent = 'Enter your email and password.'; return; }
+  btn.disabled = true; btn.textContent = 'Logging in…';
   firebase.auth().signInWithEmailAndPassword(email, senha).catch(() => {
-    btn.disabled = false; btn.textContent = 'Entrar';
-    erro.textContent = 'E-mail ou senha incorretos.';
+    btn.disabled = false; btn.textContent = 'Log In';
+    erro.textContent = 'Incorrect email or password.';
   });
 }
 $('#login-btn').addEventListener('click', attemptLogin);
