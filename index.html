@@ -813,9 +813,7 @@ function computeEvolutionSeries(){
   state.payments.forEach(p => events.push({ date: p.date, delta: -p.amount }));
   events.sort((a,b) => a.date.localeCompare(b.date));
   let running = 0;
-  const map = new Map();
-  events.forEach(e => { running += e.delta; map.set(e.date, Math.max(0, running)); });
-  return Array.from(map.entries()).map(([date,total]) => ({date, total})).sort((a,b)=>a.date.localeCompare(b.date));
+  return events.map(e => { running += e.delta; return { date: e.date, total: Math.max(0, running) }; });
 }
 
 /* ---------------- Chart instances ---------------- */
